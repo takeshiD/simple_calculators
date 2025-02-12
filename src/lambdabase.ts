@@ -96,14 +96,12 @@ class LambdaCalculator {
 
         for (const token of tokens) {
             const exp = this.parse(token);
-
             switch (exp.type) {
                 case 'number':
                     if (typeof exp.value === 'number') {
                         stack.push(exp.value);
                     }
                     break;
-
                 case 'operator':
                     if (exp.value === '+') {
                         const b = this.ensureStackNumber(stack);
@@ -111,20 +109,17 @@ class LambdaCalculator {
                         stack.push(a + b);
                     }
                     break;
-
                 case 'define':
                     if (typeof exp.value === 'string') {
                         const value = this.ensureStackNumber(stack);
                         stack.push(this.env.define(exp.value, value));
                     }
                     break;
-
                 case 'variable':
                     if (typeof exp.value === 'string') {
                         stack.push(this.env.lookup(exp.value));
                     }
                     break;
-
                 default:
                     throw new Error(`Unknown expression type: ${exp.type}`);
             }
